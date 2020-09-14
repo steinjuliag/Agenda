@@ -1,0 +1,91 @@
+<div class="bloco-central">
+  <p-table [columns]="cols" [value]="usuarios" selectionMode="single" [(selection)]="selectedUsuario"
+    (onRowSelect)="onRowSelect($event)" [paginator]="true" [rows]="15">
+    <ng-template pTemplate="caption">
+      Lista de usuários
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Possui Dívida</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-usuario>
+      <tr [pSelectableRow]="rowData"  pTooltip="Clique para Cadastrar/Editar/Visualizar uma Dívida" tooltipPosition="top">
+        <td>
+          <span>{{usuario.name}}</span>
+        </td>
+        <td>
+          <span>{{usuario.email}}</span>
+        </td>
+        <td align="center">
+          <span>{{usuario.possuiDivida ? 'Sim' : 'Não'}}</span>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<p-dialog header="Detalhes do Usuário" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true"
+  [style]="{width: '600px'}" [contentStyle]="{'overflow':'visible'}">
+
+  <div class="ui-g ui-fluid" *ngIf="usuario">
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="name">Nome</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="name" [(ngModel)]="usuario.name" placeholder="Nome" disabled />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="email">Email</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="email" [(ngModel)]="usuario.email" placeholder="Email" disabled />
+      </div>
+    </div>
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="motivo">Motivo</label>
+      </div>
+      <div class="ui-g-8">
+        <input pInputText id="motivo" [(ngModel)]="usuario.divida.motivo" placeholder="Motivo"
+          class="ng-dirty ng-invalid" required />
+      </div>
+    </div>
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="data">Data</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <p-calendar [(ngModel)]="usuario.divida.data" [showIcon]="true" dateFormat="dd/mm/yy" placeholder="Data"
+          required>
+        </p-calendar>
+      </div>
+    </div>
+
+
+    <div class="ui-g-12">
+      <div class="ui-g-4">
+        <label for="data">Valor</label>
+      </div>
+      <div class="ui-g-12 ui-md-4">
+        <input type="text" pInputText  currencyMask [options]="{align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',' }" [(ngModel)]="usuario.divida.valor" placeholder="Valor"
+          required>
+      </div>
+    </div>
+
+  </div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button type="button" pButton icon="fa fa-close" (click)="delete()" label="Deletar"
+        [disabled]="!usuario?.divida?.id"></button>
+      <button type="button" pButton icon="fa fa-check" (click)="save()" label="Salvar"
+        [disabled]="!(usuario.divida.motivo && usuario.divida.data && usuario.divida.valor)"></button>
+    </div>
+  </p-footer>
+</p-dialog>

@@ -1,0 +1,76 @@
+<div class="bloco-central">
+     <div class="ui-g-12 ui-md-4">
+    <h3>Agendar hora</h3>
+    <p-calendar [(ngModel)]="agenda.dataInicial" [showTime]="true"></p-calendar>
+  </div>
+  <h3>Escolha um serviço abaixo</h3>
+  <div class="ui-g-12 ui-md-12">
+    <p-table [value]="listaServico" [(selection)]="agenda.servicos" dataKey="nome">
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 3em">
+            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          </th>
+          <th>Nome</th>
+          <th>Valor</th>
+          <th>Tempo</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-agenda>
+        <tr [pSelectableRow]="agenda">
+          <td>
+            <p-tableCheckbox [value]="agenda"></p-tableCheckbox>
+          </td>
+          <td>{{agenda.nome}}</td>
+          <td>{{agenda.valor}}</td>
+          <td>{{agenda.tempoServicoMinutos}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <div class="ui-g-12 ui-md-12" [hidden]="!salvoComSucesso">
+    <h3>Salvo com sucesso!</h3>
+  </div>
+
+  <div class="ui-g-12 ui-md-12">
+
+    <button pButton type="button" label="Salvar" (click)="salvar()"></button>
+  </div>
+  <div class="ui-g-12 ui-md-12">
+    <h3>Lista de agendamentos</h3>
+    <div class="ui-g-12 ui-md-12">
+
+      <p-table [value]="listarAgenda" dataKey="nome">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 10em"></th>
+            <th>id agenda</th>
+            <th>Data inicial</th>
+            <th>Data final</th>
+            <th>Servico</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-agenda>
+          <tr [pSelectableRow]="agenda">
+            <td style="width: 10em"><button pButton (click)="excluir(agenda.idAgenda)">Excluir</button></td>
+            <td>{{agenda.idAgenda}}</td>
+            <td>{{agenda.dataInicial | date: 'dd/MM/yyyy HH:mm'}}</td>
+            <td>{{agenda.dataFinal | date: 'dd/MM/yyyy HH:mm'}}</td>
+            <td>
+              <ul>
+                  <li *ngFor="let servico of agenda.servicos">
+                    {{servico.nome}}
+                  </li>
+                </ul>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+    <div class="ui-g-12 ui-md-12">
+      <button pButton type="button" label="Lista Agenda" (click)="buscarAgenda()"></button>
+    </div>
+  </div>
+</div>

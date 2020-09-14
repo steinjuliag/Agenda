@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+    font-family: 'Pluto', Calibri, sans-serif;
+    font-style: normal;
+    font-size: 12px;
+}
+
+body {
+    background: #ececec url('./assets/imagens/background/bg-cinza.png');
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.bloco-central {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    word-wrap: break-word;
+    margin: 15px auto 20px auto;
+    width: 85%;
+    min-height: 80vh;
+    padding: 2em;
+    background-color: white;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.bloco-central--resize {
+    width: 77%;
+}
